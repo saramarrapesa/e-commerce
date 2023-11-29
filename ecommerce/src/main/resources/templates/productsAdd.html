@@ -51,9 +51,9 @@
                            placeholder="Enter name">
 
                 </div>
-                <!-- <div class="form-group">
-                   <label for="category">Select Category</label>
-                   <select class="form-control" th:field="*{categoryId}" id="category" name="category">
+                <div class="form-group">
+                  <label for="category">Select Category</label>
+                   <select class="form-control" th:field="*{category}" id="category" name="category">
                        <option th:each="category :${categories}"
                                th:value="${category.id}"
                                th:text="${category.name}"
@@ -82,10 +82,10 @@
                    <label class="custom-file-label" for="productImage">Choose file</label>
                </div>
                <div class="form-group">
-                   <img src="#" id="imgPreview" height="100px" width="100px" th:src="@{${'/productImages/' + product.imageName}}" style="margin-top: 20px" alt=" ">
+                   <img src="#" id="imgPreview" height="100px" width="100px" th:src="@{${'/productImages/' + product.image}}" style="margin-top: 20px" alt=" ">
                </div>
-               <input type="hidden" name="imgName" th:value="${product.imageName}">
-               <button type="submit" class="btn btn-primary">Submit</button> -->
+               <input type="hidden" name="imgName" th:value="${product.image}">
+               <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </div>
     </form>
@@ -101,7 +101,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
-<!--
 <script>
     function readURL(input){
         if(input.files && input.files[0]){
@@ -119,6 +118,6 @@
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
-</script>-->
+</script>
 </body>
 </html>

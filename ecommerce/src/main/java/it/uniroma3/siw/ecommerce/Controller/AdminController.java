@@ -1,17 +1,18 @@
 package it.uniroma3.siw.ecommerce.Controller;
 
 import it.uniroma3.siw.ecommerce.Model.Category;
+import it.uniroma3.siw.ecommerce.Model.Image;
 import it.uniroma3.siw.ecommerce.Model.Product;
 import it.uniroma3.siw.ecommerce.Service.CategoryService;
 import it.uniroma3.siw.ecommerce.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @Controller
@@ -75,6 +76,12 @@ public class AdminController {
         model.addAttribute("product", new Product());
         model.addAttribute("categories", categoryService.getAllCategories());
         return "productsAdd";
+    }
+
+    @PostMapping("/admin/products/add")
+    public String productAddPost(@ModelAttribute("product") Product product , @RequestParam("productImage")MultipartFile file,  Model model) throws IOException{
+       model.addAttribute("product",this.productService.addProduct(product,file));
+       return "redirect:/admin/products";
     }
 
 
