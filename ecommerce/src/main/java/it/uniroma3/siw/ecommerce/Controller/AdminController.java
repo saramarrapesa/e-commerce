@@ -1,14 +1,12 @@
 package it.uniroma3.siw.ecommerce.Controller;
 
 import it.uniroma3.siw.ecommerce.Model.Category;
-import it.uniroma3.siw.ecommerce.Model.Image;
 import it.uniroma3.siw.ecommerce.Model.Product;
 import it.uniroma3.siw.ecommerce.Service.CategoryService;
 import it.uniroma3.siw.ecommerce.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,20 +23,20 @@ public class AdminController {
 
     @GetMapping("/admin")
     public String adminHome(){
-        return "adminHome";
+        return "admin/adminHome";
     }
 
     //categories section
     @GetMapping("/admin/categories")
     public String getCategories(Model model){
         model.addAttribute("categories", categoryService.getAllCategories());
-        return "categories";
+        return "admin/categories";
     }
 
     @GetMapping("/admin/categories/add")
     public String getCategoriesAdd(Model model){
         model.addAttribute("category", new Category());
-        return "categoriesAdd";
+        return "admin/categoriesAdd";
     }
 
     @PostMapping("/admin/categories/add")
@@ -58,7 +56,7 @@ public class AdminController {
         Optional<Category> category = categoryService.getCategoryById(id);
         if(category.isPresent()){
             model.addAttribute("category", category.get());
-            return "categoriesAdd";
+            return "admin/categoriesAdd";
         }
         else
            return "404";
@@ -68,14 +66,14 @@ public class AdminController {
     @GetMapping("/admin/products")
     public String getProducts(Model model){
         model.addAttribute("products", productService.getAllProducts());
-        return "products";
+        return "admin/products";
     }
 
     @GetMapping("/admin/products/add")
     public String getProductsAdd(Model model){
         model.addAttribute("product", new Product());
         model.addAttribute("categories", categoryService.getAllCategories());
-        return "productsAdd";
+        return "admin/productsAdd";
     }
 
     @PostMapping("/admin/products/add")
@@ -103,7 +101,7 @@ public class AdminController {
         product.setCategory(existingProduct.getCategory());
         model.addAttribute("product" , product);
         model.addAttribute("categories" , categoryService.getAllCategories());
-        return "productsAdd";
+        return "admin/productsAdd";
     }
 
 }

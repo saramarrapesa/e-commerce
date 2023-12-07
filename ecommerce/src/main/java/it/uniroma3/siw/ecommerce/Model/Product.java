@@ -1,7 +1,8 @@
 package it.uniroma3.siw.ecommerce.Model;
 
-import jakarta.persistence.*;
 import it.uniroma3.siw.ecommerce.Model.Image;
+import jakarta.persistence.*;
+
 
 @Entity
 public class Product {

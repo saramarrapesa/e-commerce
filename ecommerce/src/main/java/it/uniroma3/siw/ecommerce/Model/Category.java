@@ -1,5 +1,6 @@
 package it.uniroma3.siw.ecommerce.Model;
 
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

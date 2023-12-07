@@ -1,13 +1,11 @@
 package it.uniroma3.siw.ecommerce.Model;
 
+import it.uniroma3.siw.ecommerce.OAuth.AuthenticationProvider;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import org.hibernate.annotations.CollectionId;
-import it.uniroma3.siw.ecommerce.Model.Role;
+import org.hibernate.validator.constraints.NotBlank;
 
 import java.util.List;
+
 
 @Entity
 @Table(name = "users") // cambiamo nome perchè in postgres user è una parola riservata
@@ -16,36 +14,36 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotEmpty
-    @Column(nullable = false)
-    private String firstName;
-   private String lastName;
 
-   @Column(nullable = false, unique = true)
-    @NotEmpty
-    @Email(message = "{errors.invalid_email}")
+    private String name;
+
+    private String surname;
+    @NotBlank
     private String email;
 
-   private String password;
-   @ManyToMany(cascade = CascadeType.MERGE , fetch = FetchType.EAGER)
-   @JoinTable(
-           name = "user_role",
-           joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
-               inverseJoinColumns = {@JoinColumn(name = "ROLE_ID",referencedColumnName ="ID")}
-   )
-   private List<Role> roles;
+    @NotBlank
+    private String username;
 
-    public User(User user) {
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
-        this.email = user.getEmail();
-        this.password = user.getPassword();
-        this.roles = user.getRoles();
+    private boolean enabled;
+    @Enumerated(EnumType.STRING)
+    private AuthenticationProvider authProvider;
+
+
+    public AuthenticationProvider getAuthProvider() {
+        return authProvider;
     }
 
-    public User(){
-
+    public void setAuthProvider(AuthenticationProvider authProvider) {
+        this.authProvider = authProvider;
     }
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
 
     public Long getId() {
         return id;
@@ -54,21 +52,20 @@ public class User {
     public void setId(Long id) {
         this.id = id;
     }
-
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getEmail() {
@@ -79,19 +76,49 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getUsername() {
+        return username;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public List<Role> getRoles() {
-        return roles;
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + ((surname == null) ? 0 : surname.hashCode());
+        result = prime * result + ((email == null) ? 0 : email.hashCode());
+        return result;
     }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        User other = (User) obj;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
+        if (surname == null) {
+            if (other.surname != null)
+                return false;
+        } else if (!surname.equals(other.surname))
+            return false;
+        if (email == null) {
+            if (other.email != null)
+                return false;
+        } else if (!email.equals(other.email))
+            return false;
+        return true;
     }
+
 }
