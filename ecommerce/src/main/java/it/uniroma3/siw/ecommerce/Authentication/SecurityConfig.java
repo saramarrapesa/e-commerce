@@ -55,7 +55,7 @@ public class SecurityConfig{
     @Bean
     protected SecurityFilterChain configure(final HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests()
-                .requestMatchers(HttpMethod.GET,"/","/index","/shop/**","/register","/login","/css/**", "/images/**","/productImage/**", "favicon.icon","/cart","/checkout","/orderPlaced","/viewProduct","/productImages/{id}").permitAll()
+                .requestMatchers(HttpMethod.GET,"/","/index","/shop/**","/register","/login","/css/**","/lib/**", "/images/**","/productImage/**", "favicon.icon","/cart","/checkout","/orderPlaced","/viewProduct","/productImages/{id}").permitAll()
                 .requestMatchers("/oauth2/**").authenticated()
                 .requestMatchers(HttpMethod.POST,"/register","/login").permitAll()
                 .requestMatchers(HttpMethod.GET,"/admin/**").hasAnyAuthority(ADMIN_ROLE)

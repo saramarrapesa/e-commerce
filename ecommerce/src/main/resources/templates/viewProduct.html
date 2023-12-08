@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
-    <meta firstName="viewport"
+    <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -18,7 +18,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
-            <img th:src="@{/images/logo.png}" src="../static/images/logo.png" width="auto" height="40"
+            <img th:src="@{/images/logo2.jpg}" src="../static/images/logo2.jpg" width="auto" height="40"
                  class="d-inline-block align-top" alt=""/>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -59,8 +59,8 @@
                  alt="">
         </div>
         <div class="col-sm-7 mt-5">
-            <h2 th:text="${product.firstName}"></h2>
-            <p th:text="${product.category.firstName}"></p>
+            <h2 th:text="${product.name}"></h2>
+            <p th:text="${product.category.name}"></p>
             <h2>&euro; <span th:text="${product.price}"></span></h2>
             <h5>Weight:
                 <spna th:text="${product.weight}"></spna> grams.
