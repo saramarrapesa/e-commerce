@@ -32,6 +32,7 @@ public class HomeController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication instanceof AnonymousAuthenticationToken) {
             model.addAttribute("cartCount",GlobalData.cart.size());
+            model.addAttribute("categories", categoryService.getAllCategories());
             return "index";
         }
         else {
@@ -64,6 +65,7 @@ public class HomeController {
     public  String viewProduct(Model model, @PathVariable Long id ){
         model.addAttribute("product", productService.getProductById(id).get());
         model.addAttribute("cartCount", GlobalData.cart.size());
+        model.addAttribute("categories",categoryService.getAllCategories());
         return "viewProduct";
     }
 

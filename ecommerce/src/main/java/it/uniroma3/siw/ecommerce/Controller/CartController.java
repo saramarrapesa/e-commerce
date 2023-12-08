@@ -2,6 +2,7 @@ package it.uniroma3.siw.ecommerce.Controller;
 
 import it.uniroma3.siw.ecommerce.Global.GlobalData;
 import it.uniroma3.siw.ecommerce.Model.Product;
+import it.uniroma3.siw.ecommerce.Service.CategoryService;
 import it.uniroma3.siw.ecommerce.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class CartController {
     @Autowired
     ProductService productService;
+    @Autowired
+    CategoryService categoryService;
     @GetMapping("/addToCart/{id}")
     public String addToCart(@PathVariable Long id){
         GlobalData.cart.add(productService.getProductById(id).get());
@@ -24,6 +27,7 @@ public class CartController {
         model.addAttribute("cartCount", GlobalData.cart.size());
         model.addAttribute("total", GlobalData.cart.stream().mapToDouble(Product::getPrice));
         model.addAttribute("cart", GlobalData.cart);
+        model.addAttribute("categories", categoryService.getAllCategories());
         return "cart";
     }
 
@@ -37,6 +41,7 @@ public class CartController {
     @GetMapping("/checkout")
     public  String checkout(Model model){
         model.addAttribute("total", GlobalData.cart.stream().mapToDouble(Product::getPrice));
+        model.addAttribute("cartCount",GlobalData.cart.size());
         return  "checkout";
     }
 
