@@ -1,7 +1,11 @@
 package it.uniroma3.siw.ecommerce.Controller;
 
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
+import it.uniroma3.siw.ecommerce.Model.Credentials;
+import it.uniroma3.siw.ecommerce.Model.User;
+import it.uniroma3.siw.ecommerce.Service.CredentialsService;
+import it.uniroma3.siw.ecommerce.Session.SessionData;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -11,16 +15,33 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 @ControllerAdvice
 public  class GlobalController
 {
-    @ModelAttribute(value = "userDetails")
 
-    public UserDetails getUser() {
-        UserDetails user = null;
+    @Autowired
+    private CredentialsService credentialsService;
+    @Autowired
+    private SessionData sessionData;
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    @ModelAttribute("userDetails")
+    public User getUser(){
+
+        try {
+            return this.sessionData.getLoggedUser();
         }
-        return user;
+        catch(ClassCastException e){
+            return null;
+        }
     }
 
+
+    @ModelAttribute("role")
+    public String getUserRole() {
+        try {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+
+            return credentials.getRole();
+        } catch (ClassCastException e) {
+            return null;
+        }
+    }
 }

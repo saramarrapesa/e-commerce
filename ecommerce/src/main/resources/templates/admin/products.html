@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
+    <meta firstName="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -53,8 +53,8 @@
 
         <tr th:each="product, iStat : ${products}">
             <th scope="row" th:text="${iStat.index + 1}">1</th>
-            <td th:text="${product.name}">Larry</td>
-            <td th:text="${product.category.name}">Larry</td>
+            <td th:text="${product.firstName}">Larry</td>
+            <td th:text="${product.category.firstName}">Larry</td>
             <td><img src="" height="100px" width="100px"  th:src="@{${'/productImages/' + product.image.id}}"></td>
 
             <td><a href="" th:href="@{/admin/product/delete/{id}(id=${product.id})}" class="btn btn-danger">Delete</a></td>

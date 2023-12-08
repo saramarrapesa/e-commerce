@@ -11,9 +11,8 @@ import org.springframework.validation.Validator;
 public class CredentialsValidator implements Validator {
 
 
-
     @Autowired
-    private CredentialsService credentialsService;
+    CredentialsService credentialsService;
 
     final Integer MAX_USERNAME_LENGTH = 20;
     final Integer MIN_USERNAME_LENGTH = 4;
@@ -26,24 +25,26 @@ public class CredentialsValidator implements Validator {
     }
 
     @Override
-    public void validate(Object target, Errors errors) {
-
-        Credentials credentials = (Credentials) target;
+    public void validate(Object o, Errors errors) {
+        Credentials credentials = (Credentials) o;
         String userName = credentials.getUsername().trim();
-        String password = credentials.getPassword().trim();
-        if (userName.isEmpty()) {
-            errors.rejectValue("userName", "required");
-        } else if (userName.length() < MIN_USERNAME_LENGTH || userName.length() > MAX_USERNAME_LENGTH) {
-            errors.rejectValue("userName", "size");
-        } else if (this.credentialsService.getCredentials(userName) != null) {
+        String password= credentials.getPassword().trim();
+
+        if(userName.isEmpty()){
+            errors.rejectValue("userName","required");
+        }
+        else if(userName.length() < MIN_USERNAME_LENGTH || userName.length() > MAX_USERNAME_LENGTH){
+            errors.rejectValue("userName","size");
+        }
+        else if(this.credentialsService.getCredentials(userName) != null){
             errors.rejectValue("userName", "duplicate");
         }
 
-        if (password.isEmpty()) {
-            errors.rejectValue("password", "required");
-        } else if (password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH) {
-            errors.rejectValue("password", "size");
+        if(password.isEmpty()){
+            errors.rejectValue("password","required");
         }
-
+        else if(password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH){
+            errors.rejectValue("password","size");
+        }
     }
 }

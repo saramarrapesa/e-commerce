@@ -20,8 +20,8 @@ public class UserValidator implements Validator {
     public void validate(Object target, Errors errors) {
 
         User user = (User) target;
-        String firstName = user.getName().trim();
-        String lastName = user.getSurname().trim();
+        String firstName = user.getFirstName().trim();
+        String lastName = user.getLastName().trim();
 
         if(firstName.isEmpty()){
             errors.rejectValue("firstname","required");

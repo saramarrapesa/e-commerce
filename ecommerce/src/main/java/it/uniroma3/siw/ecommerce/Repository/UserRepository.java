@@ -8,10 +8,6 @@ import java.util.Optional;
 
 public interface UserRepository extends CrudRepository<User,Long> {
 
-    Optional<User> findUsersByEmail(String email);
-
     Optional<User> findByUsername(String username);
 
-    @Query("SELECT u FROM User u WHERE u.username = :username")
-    User getUserByUsername(String username);
 }

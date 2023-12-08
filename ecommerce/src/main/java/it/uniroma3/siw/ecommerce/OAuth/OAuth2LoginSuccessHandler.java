@@ -30,27 +30,19 @@ public class OAuth2LoginSuccessHandler  implements AuthenticationSuccessHandler 
         CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
 
         String loginName = oAuth2User.getLogin();
-        String name = oAuth2User.getName();
-        String surname = oAuth2User.getSurname();
+        String displayName = oAuth2User.getName();
         String email = oAuth2User.getEmail();
+        String fullName = oAuth2User.getFullName();
         System.out.println("Login : " + loginName );
-        System.out.println("name: " + name);
-        System.out.println("surname: " + surname );
+        System.out.println("Display name: " + displayName );
+        System.out.println("fullname: " + fullName );
         System.out.println("email: " + email );
 
-        User user;
-        if(loginName != null) {
-
-            user = userService.getUser(loginName);
-        }else{
-
-            user = userService.getUser(name);
-        }
-
+        User user= userService.getUsername(loginName);
         if(user == null){
-            userService.registerNewCustomerAfterOAuthLoginSuccess(loginName,name,surname, email,AuthenticationProvider.GOOGLE);
+            userService.registerNewCustomerAfterOAuthLoginSuccess(loginName,fullName,AuthenticationProvider.GOOGLE);
         }else{
-            userService.updateExistingUser(user, name,surname, AuthenticationProvider.GOOGLE);
+            userService.updateExistingUser(user ,fullName, AuthenticationProvider.GOOGLE);
         }
 
         response.sendRedirect("/login/oauth2/user");

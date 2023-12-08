@@ -5,9 +5,12 @@ import it.uniroma3.siw.ecommerce.Model.Credentials;
 import it.uniroma3.siw.ecommerce.Model.User;
 import it.uniroma3.siw.ecommerce.Service.CredentialsService;
 import it.uniroma3.siw.ecommerce.Service.UserService;
+import it.uniroma3.siw.ecommerce.Session.SessionData;
 import it.uniroma3.siw.ecommerce.Validator.CredentialsValidator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,7 +29,8 @@ public class LoginController {
     @Autowired
     CredentialsValidator credentialsValidator;
 
-
+    @Autowired
+    SessionData sessionData;
 
     @GetMapping("/login")
     public  String login(){
@@ -58,12 +62,24 @@ public class LoginController {
         return "register";
     }
 
+
+    @GetMapping(value = "/success")
+    public String defaultAfterLogin(Model model) {
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+        if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
+            return "admin/adminHome";
+        }
+        return "index";
+    }
+
     /* questo metodo probabilmente dovrà essere cancellato*/
     @RequestMapping(value={"login/oauth2/user"}, method = RequestMethod.GET)
-    public String oAuth2Successful(){
-
-
-        return "redirect:/successful";
+    public String oAuth2Successful(Model model){
+        User loggedUser = this.sessionData.getLoggedUser();
+        model.addAttribute("user",loggedUser);
+        return "index";
     }
 
 

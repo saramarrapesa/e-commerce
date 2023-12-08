@@ -2,35 +2,23 @@ package it.uniroma3.siw.ecommerce.Authentication;
 
 
 
-import it.uniroma3.siw.ecommerce.Model.MyUserDetail;
-import it.uniroma3.siw.ecommerce.OAuth.CustomOAuth2User;
 import it.uniroma3.siw.ecommerce.OAuth.OAuth2LoginSuccessHandler;
 import it.uniroma3.siw.ecommerce.Service.CustomOAuth2UserService;
-import it.uniroma3.siw.ecommerce.Service.UserDetailsServiceImpl;
 import it.uniroma3.siw.ecommerce.Service.UserService;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
-
-import java.io.IOException;
 
 import static it.uniroma3.siw.ecommerce.Model.Credentials.ADMIN_ROLE;
 
@@ -68,7 +56,7 @@ public class SecurityConfig{
     protected SecurityFilterChain configure(final HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests()
                 .requestMatchers(HttpMethod.GET,"/","/index","/shop/**","/register","/login","/css/**", "/images/**","/productImage/**", "favicon.icon","/cart","/checkout","/orderPlaced","/viewProduct","/productImages/{id}").permitAll()
-                .requestMatchers("/oauth/**").permitAll()
+                .requestMatchers("/oauth2/**").authenticated()
                 .requestMatchers(HttpMethod.POST,"/register","/login").permitAll()
                 .requestMatchers(HttpMethod.GET,"/admin/**").hasAnyAuthority(ADMIN_ROLE)
                 .requestMatchers(HttpMethod.POST,"/admin/**").hasAnyAuthority(ADMIN_ROLE)
