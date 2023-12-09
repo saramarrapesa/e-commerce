@@ -106,10 +106,10 @@
     <div class="row px-xl-5">
 
         <!-- Shop Product Start -->
-        <div class="col-lg-9 col-md-12" th:each="product : ${products}">
-            <div class="row pb-3">
-                <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-                    <div class="card product-item border-0 mb-4">
+        <div class="col-lg-4 col-md-3" th:each="product : ${products}">
+            <!--<div class="row pb-3">-->
+               <!-- <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
+                    <div class="card product-item border-0 mb-4">-->
                         <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0" >
                             <img class="img-fluid w-100" th:src="@{${'/productImages/' + product.image}}" th:alt="${product.name}" alt="">
                         </div>
@@ -124,9 +124,9 @@
                             <a  th:href="@{/addToCart/{id}(id = ${product.id})}" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
                         </div>
                     </div>
-                </div>
+                <<!--/div>-->
 
-            </div>
+            <!--</div>-->
         </div>
         <!-- Shop Product End -->
     </div>
@@ -153,7 +153,6 @@
     </nav>
 </div>
 <!-- Shop End -->
-
 
 <!-- Footer Start -->
 <div class="container-fluid bg-secondary text-dark mt-5 pt-5">
@@ -230,8 +229,17 @@
 <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
 
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="/lib/easing/easing.min.js"></script>
+
+<!-- Contact Javascript File -->
+<script src="/mail/jqBootstrapValidation.min.js"></script>
+<script src="/mail/contact.js"></script>
+
+<!-- Template Javascript -->
+<script src="/js/main.js"></script>
 </body>
 </html>

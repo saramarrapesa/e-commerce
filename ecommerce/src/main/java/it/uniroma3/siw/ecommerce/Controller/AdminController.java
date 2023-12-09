@@ -21,10 +21,10 @@ public class AdminController {
     @Autowired
     ProductService productService;
 
-    @GetMapping("/admin")
+   /* @GetMapping("/admin")
     public String adminHome(){
         return "admin/adminHome";
-    }
+    }*/
 
     //categories section
     @GetMapping("/admin/categories")

@@ -52,6 +52,8 @@ public class LoginController {
                                BindingResult credentialsBindingResult,
                                Model model) {
 
+        this.credentialsValidator.validate(credentials,credentialsBindingResult);
+
         if(!userBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
             userService.saveUser(user);
             credentials.setUser(user);
