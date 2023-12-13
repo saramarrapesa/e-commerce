@@ -19,7 +19,7 @@ public class ProductService {
 
     @Autowired
     private ImageRepository imageRepository;
-    public Iterable<Product> getAllProducts(){
+    public List<Product> getAllProducts(){
         return productRepository.findAll();
     }
 
@@ -45,5 +45,9 @@ public class ProductService {
 
     public List<Product> getAllProductsByCategory(long id){
         return productRepository.findAllByCategory_Id(id);
+    }
+
+    public List<Product> findByKeyword(String keyword){
+        return productRepository.findByKeyword(keyword);
     }
 }

@@ -3,6 +3,7 @@ package it.uniroma3.siw.ecommerce.Controller;
 import it.uniroma3.siw.ecommerce.Global.GlobalData;
 import it.uniroma3.siw.ecommerce.Model.Credentials;
 import it.uniroma3.siw.ecommerce.Model.User;
+import it.uniroma3.siw.ecommerce.Service.CategoryService;
 import it.uniroma3.siw.ecommerce.Service.CredentialsService;
 import it.uniroma3.siw.ecommerce.Service.UserService;
 import it.uniroma3.siw.ecommerce.Session.SessionData;
@@ -28,12 +29,14 @@ public class LoginController {
 
     @Autowired
     CredentialsValidator credentialsValidator;
+    @Autowired
+    CategoryService categoryService;
 
     @Autowired
     SessionData sessionData;
 
     @GetMapping("/login")
-    public  String login(){
+    public  String login(Model model){
         GlobalData.cart.clear();
         return "login";
     }
@@ -73,6 +76,7 @@ public class LoginController {
         if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
             return "admin/adminHome";
         }
+        model.addAttribute("categories", categoryService.getAllCategories());
         return "index";
     }
 

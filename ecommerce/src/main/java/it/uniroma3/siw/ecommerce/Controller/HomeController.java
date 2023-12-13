@@ -1,6 +1,7 @@
 package it.uniroma3.siw.ecommerce.Controller;
 
 import it.uniroma3.siw.ecommerce.Global.GlobalData;
+import it.uniroma3.siw.ecommerce.Global.WishList;
 import it.uniroma3.siw.ecommerce.Model.Credentials;
 import it.uniroma3.siw.ecommerce.Service.CategoryService;
 import it.uniroma3.siw.ecommerce.Service.CredentialsService;
@@ -31,8 +32,11 @@ public class HomeController {
     public  String home(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication instanceof AnonymousAuthenticationToken) {
+            model.addAttribute("wishlistCount", WishList.wishlist.size());
             model.addAttribute("cartCount",GlobalData.cart.size());
             model.addAttribute("categories", categoryService.getAllCategories());
+            GlobalData.cart.clear();
+            WishList.wishlist.clear();
             return "index";
         }
         else {
@@ -45,11 +49,17 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/shop")
-    public  String shop(Model model){
+   @GetMapping("/shop")
+    public  String shop(Model model, String keyword){
        model.addAttribute("categories", categoryService.getAllCategories());
-       model.addAttribute("products", productService.getAllProducts());
+       model.addAttribute("wishlistCount", WishList.wishlist.size());
        model.addAttribute("cartCount", GlobalData.cart.size());
+       if(keyword!=null){
+           model.addAttribute("products", productService.findByKeyword(keyword));
+       }
+       else {
+           model.addAttribute("products", productService.getAllProducts());
+       }
        return "shop";
     }
 
@@ -57,6 +67,7 @@ public class HomeController {
     public  String shopByCategory(Model model, @PathVariable Long id ){
         model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("products", productService.getAllProductsByCategory(id));
+        model.addAttribute("wishlistCount", WishList.wishlist.size());
         model.addAttribute("cartCount", GlobalData.cart.size());
         return "shop";
     }
@@ -64,9 +75,11 @@ public class HomeController {
     @GetMapping("/shop/viewproduct/{id}")
     public  String viewProduct(Model model, @PathVariable Long id ){
         model.addAttribute("product", productService.getProductById(id).get());
+        model.addAttribute("wishlistCount", WishList.wishlist.size());
         model.addAttribute("cartCount", GlobalData.cart.size());
         model.addAttribute("categories",categoryService.getAllCategories());
         return "viewProduct";
     }
+
 
 }

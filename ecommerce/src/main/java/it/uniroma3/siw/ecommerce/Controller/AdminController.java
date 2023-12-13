@@ -21,10 +21,10 @@ public class AdminController {
     @Autowired
     ProductService productService;
 
-   /* @GetMapping("/admin")
+    @GetMapping("/admin")
     public String adminHome(){
         return "admin/adminHome";
-    }*/
+    }
 
     //categories section
     @GetMapping("/admin/categories")
@@ -94,6 +94,7 @@ public class AdminController {
         Product product = new Product();
         product.setId(existingProduct.getId());
         product.setName(existingProduct.getName());
+        product.setBrand(existingProduct.getBrand());
         product.setWeight(existingProduct.getWeight());
         product.setDescription(existingProduct.getDescription());
         product.setPrice(existingProduct.getPrice());

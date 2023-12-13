@@ -16,12 +16,21 @@ public class Product {
     private double price;
 
     private String name;
+
+    private String brand;
     private double weight;
     private String description;
 
     @OneToOne
     private Image image;
 
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
     public void setName(String name) {
         this.name = name;
     }

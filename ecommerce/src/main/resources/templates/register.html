@@ -1,4 +1,4 @@
-<!doctype html>
+<!--<!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -48,11 +48,11 @@
         <form th:action="@{/register}" th:object="${user}" method="post">
             <div class="form-group">
                 <label for="firstName">First Name</label>
-                <input type="text" firstName="firstName" id="firstName" required th:field="${user.firstName}" placeholder="Your Firstname" class="form-control form-control-lg">
+                <input type="text" name="firstName" id="firstName" required th:field="${user.firstName}" placeholder="Your Firstname" class="form-control form-control-lg">
             </div>
             <div class="form-group">
                 <label for="lastName">Last Name</label>
-                <input type="text" firstName="lastName" id="lastName" required th:field="${user.lastName}" placeholder="Your Lastname" class="form-control form-control-lg">
+                <input type="text" name="lastName" id="lastName" required th:field="${user.lastName}" placeholder="Your Lastname" class="form-control form-control-lg">
             </div>
             <div class="form-group">
                 <label for="email">Email address</label>
@@ -82,5 +82,51 @@
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>
+-->
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>Register Form</title>
+    <link rel="stylesheet" href="/css/login/style.css" />
+</head>
+<body>
+<div class="center">
+    <h1>Sign up</h1>
+    <form th:action="@{/register}" th:object="${user}" method="post">
+        <div class="txt_field">
+            <input type="text" name="firstname" id="firstname" required th:field="${user.firstName}" >
+            <span></span>
+            <label for="firstname" >Firstname</label>
+        </div>
+        <div class="txt_field">
+            <input type="text" name="lastname" id="lastname" required th:field="${user.lastName}" >
+            <span></span>
+            <label for="lastname" >Lastname</label>
+        </div>
+        <div class="txt_field">
+            <input type="email" name="email" id="email" required th:field="${user.email}">
+            <span></span>
+            <label for="email" >Email</label>
+        </div>
+        <div class="txt_field">
+            <input type="text" name="username" id="username" required th:field="${credentials.username}">
+            <span></span>
+            <label for="username" >Username</label>
+        </div>
+        <div class="txt_field">
+            <input type="password" name="password" id="password"  required th:field="${credentials.password}" >
+            <span></span>
+            <label for="password" >Password</label>
+        </div>
+        <div th:if="${param.error}" class="alert alert-error text-danger">
+            Invalid username or password.
+        </div>
+        <input type="submit" value="Register" />
+        <div class="signup_link">Already have an account ? <a th:href="@{/login}">Signin</a></div>
+    </form>
+</div>
 </body>
 </html>
