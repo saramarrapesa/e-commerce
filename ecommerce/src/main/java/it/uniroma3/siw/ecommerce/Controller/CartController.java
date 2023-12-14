@@ -2,6 +2,7 @@ package it.uniroma3.siw.ecommerce.Controller;
 
 import it.uniroma3.siw.ecommerce.Global.GlobalData;
 import it.uniroma3.siw.ecommerce.Global.WishList;
+import it.uniroma3.siw.ecommerce.Model.Newsletter;
 import it.uniroma3.siw.ecommerce.Model.Product;
 import it.uniroma3.siw.ecommerce.Service.CategoryService;
 import it.uniroma3.siw.ecommerce.Service.ProductService;
@@ -30,6 +31,7 @@ public class CartController {
         model.addAttribute("total", GlobalData.cart.stream().mapToDouble(Product::getPrice));
         model.addAttribute("cart", GlobalData.cart);
         model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("newsletter", new Newsletter());
         return "cart";
     }
 
@@ -46,6 +48,7 @@ public class CartController {
         model.addAttribute("cartCount",GlobalData.cart.size());
         model.addAttribute("wishlistCount", WishList.wishlist.size());
         model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("newsletter", new Newsletter());
         return  "checkout";
     }
 

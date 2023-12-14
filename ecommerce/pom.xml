@@ -46,6 +46,16 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
         </dependency>
+        <!--email newsletter-->
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>jakarta.mail</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
         <!-- Spring Security OAuth2 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -100,6 +110,21 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>me.minidigger</groupId>
+            <artifactId>MiniMessage</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>me.minidigger</groupId>
+            <artifactId>MiniMessage</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>me.minidigger</groupId>
+            <artifactId>MiniMessage</artifactId>
+            <version>2.1.0</version>
         </dependency>
     </dependencies>
 

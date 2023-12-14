@@ -88,7 +88,7 @@
                         <a th:href="@{/}" class="nav-item nav-link active">Home</a>
                         <a th:href="@{/shop}" class="nav-item nav-link">Shop</a>
                         <a th:href="@{/cart}" class="nav-item nav-link">Shopping Cart</a>
-                        <a href="contact.html" class="nav-item nav-link">Contact</a>
+                        <a th:href="@{/contact}" class="nav-item nav-link">Contact</a>
                     </div>
                     <div class="navbar-nav ml-auto py-0">
                         <a sec:authorize="isAnonymous()" th:href="@{/login}" class="nav-item nav-link">Login</a>
@@ -255,7 +255,7 @@
                 <div class="col-md-4 mb-5">
                     <h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
                     <div class="d-flex flex-column justify-content-start">
-                        <a class="text-dark mb-2" th:href="@{/index}"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                        <a class="text-dark mb-2" th:href="@{/}"><i class="fa fa-angle-right mr-2"></i>Home</a>
                         <a class="text-dark mb-2" th:href="@{/shop}">><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
                         <a class="text-dark mb-2" th:href="@{/contact}">><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
                         <a class="text-dark mb-2" th:href="@{/cart}"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
@@ -264,16 +264,16 @@
                 </div>
                 <div class="col-md-6 mb-6">
                     <h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
-                    <form action="">
+                    <form th:action="@{/newsletter}" th:object="${newsletter}" method="post" >
                         <div class="form-group">
-                            <input type="text" class="form-control border-0 py-4 " placeholder="Your Name" required="required" />
+                            <input type="text" class="form-control border-0 py-4 " name="name" id="name" placeholder="Your Name" required th:field="${newsletter.name}"/>
                         </div>
                         <div class="form-group">
-                            <input type="email" class="form-control border-0 py-4 " placeholder="Your Email"
-                                   required="required" />
+                            <input type="email" name="email" id="email" class="form-control border-0 py-4 " placeholder="Your Email"
+                                   required th:field="${newsletter.email}"/>
                         </div>
                         <div>
-                            <button class="btn btn-primary btn-block border-0 py-3" type="submit">Subscribe Now</button>
+                            <input class="btn btn-primary btn-block border-0 py-3" type="submit" value="Subscribe Now " />
                         </div>
                     </form>
                 </div>

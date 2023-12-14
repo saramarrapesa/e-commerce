@@ -2,7 +2,9 @@ package it.uniroma3.siw.ecommerce.Controller;
 
 import it.uniroma3.siw.ecommerce.Global.GlobalData;
 import it.uniroma3.siw.ecommerce.Global.WishList;
+import it.uniroma3.siw.ecommerce.Model.Contact;
 import it.uniroma3.siw.ecommerce.Model.Credentials;
+import it.uniroma3.siw.ecommerce.Model.Newsletter;
 import it.uniroma3.siw.ecommerce.Service.CategoryService;
 import it.uniroma3.siw.ecommerce.Service.CredentialsService;
 import it.uniroma3.siw.ecommerce.Service.ProductService;
@@ -35,6 +37,7 @@ public class HomeController {
             model.addAttribute("wishlistCount", WishList.wishlist.size());
             model.addAttribute("cartCount",GlobalData.cart.size());
             model.addAttribute("categories", categoryService.getAllCategories());
+            model.addAttribute("newsletter", new Newsletter());
             GlobalData.cart.clear();
             WishList.wishlist.clear();
             return "index";
@@ -54,6 +57,7 @@ public class HomeController {
        model.addAttribute("categories", categoryService.getAllCategories());
        model.addAttribute("wishlistCount", WishList.wishlist.size());
        model.addAttribute("cartCount", GlobalData.cart.size());
+       model.addAttribute("newsletter", new Newsletter());
        if(keyword!=null){
            model.addAttribute("products", productService.findByKeyword(keyword));
        }
@@ -69,6 +73,7 @@ public class HomeController {
         model.addAttribute("products", productService.getAllProductsByCategory(id));
         model.addAttribute("wishlistCount", WishList.wishlist.size());
         model.addAttribute("cartCount", GlobalData.cart.size());
+        model.addAttribute("newsletter", new Newsletter());
         return "shop";
     }
 
@@ -78,7 +83,18 @@ public class HomeController {
         model.addAttribute("wishlistCount", WishList.wishlist.size());
         model.addAttribute("cartCount", GlobalData.cart.size());
         model.addAttribute("categories",categoryService.getAllCategories());
+        model.addAttribute("newsletter", new Newsletter());
         return "viewProduct";
+    }
+
+    @GetMapping("/contact")
+    public String getContact(Model model){
+        model.addAttribute("wishlistCount", WishList.wishlist.size());
+        model.addAttribute("cartCount", GlobalData.cart.size());
+        model.addAttribute("categories",categoryService.getAllCategories());
+        model.addAttribute("contact", new Contact());
+        model.addAttribute("newsletter", new Newsletter());
+        return "contact";
     }
 
 
