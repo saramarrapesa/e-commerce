@@ -47,8 +47,8 @@ public class EmailSenderController {
     @PostMapping(value = "/newsletter")
     public String sendnewsLetter(@ModelAttribute("newsletter") Newsletter newsletter, ModelMap modelMap , Model model){
         try {
-            String name = newsletter.getName();
-            this.emailSenderService.sendMailNewsLetter(name , newsletter.getEmail());
+            String name = newsletter.getNewsName();
+            this.emailSenderService.sendMailNewsLetter(name , newsletter.getNewsEmail());
             model.addAttribute("newsletter", newsletter);
             newsletterRepository.save(newsletter);
         }catch (Exception e){

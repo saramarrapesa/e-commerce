@@ -314,11 +314,11 @@
                     <h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
                     <form th:action="@{/newsletter}" th:object="${newsletter}" method="post" >
                         <div class="form-group">
-                            <input type="text" class="form-control border-0 py-4 " name="name" id="name" placeholder="Your Name" required th:field="${newsletter.name}"/>
+                            <input type="text" class="form-control border-0 py-4 " name="newsName" id="newsName" placeholder="Your Name" required th:field="${newsletter.newsName}"/>
                         </div>
                         <div class="form-group">
-                            <input type="email" name="email" id="email" class="form-control border-0 py-4 " placeholder="Your Email"
-                                   required th:field="${newsletter.email}"/>
+                            <input type="email" name="newsEmail" id="newsEmail" class="form-control border-0 py-4 " placeholder="Your Email"
+                                   required th:field="${newsletter.newsEmail}"/>
                         </div>
                         <div>
                             <input class="btn btn-primary btn-block border-0 py-3" type="submit" value="Subscribe Now " />

@@ -9267,6 +9267,16 @@ button.bg-dark:focus {
   color: #D19C97 !important;
 }
 
+.stars i{
+  color: #e6e6e6;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.stars i.active{
+  color: gold !important;
+}
+
 a.text-primary:hover, a.text-primary:focus {
   color: #ba6a62 !important;
 }

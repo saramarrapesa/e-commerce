@@ -3,6 +3,8 @@ package it.uniroma3.siw.ecommerce.Model;
 import it.uniroma3.siw.ecommerce.Model.Image;
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 
 @Entity
 public class Product {
@@ -21,6 +23,8 @@ public class Product {
     private double weight;
     private String description;
 
+    @OneToMany
+    private Set<Review> reviews;
     @OneToOne
     private Image image;
 
@@ -36,6 +40,13 @@ public class Product {
     }
     public String getName() {
         return name;
+    }
+    public Set<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Set<Review> reviews) {
+        this.reviews = reviews;
     }
 
     public Category getCategory() {

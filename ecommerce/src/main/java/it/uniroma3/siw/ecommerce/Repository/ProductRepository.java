@@ -10,8 +10,8 @@ import java.util.List;
 public interface ProductRepository extends CrudRepository<Product,Long> {
 
     List<Product> findAllByCategory_Id(Long id);
-    List<Product> findAllByBrand(String brand);
 
+    Product findProductById(Long id);
     @Override
     List<Product> findAll();
 

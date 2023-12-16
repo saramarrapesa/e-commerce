@@ -2,12 +2,12 @@ package it.uniroma3.siw.ecommerce.Controller;
 
 import it.uniroma3.siw.ecommerce.Global.GlobalData;
 import it.uniroma3.siw.ecommerce.Global.WishList;
-import it.uniroma3.siw.ecommerce.Model.Contact;
-import it.uniroma3.siw.ecommerce.Model.Credentials;
-import it.uniroma3.siw.ecommerce.Model.Newsletter;
+import it.uniroma3.siw.ecommerce.Model.*;
+import it.uniroma3.siw.ecommerce.Repository.ProductRepository;
 import it.uniroma3.siw.ecommerce.Service.CategoryService;
 import it.uniroma3.siw.ecommerce.Service.CredentialsService;
 import it.uniroma3.siw.ecommerce.Service.ProductService;
+import it.uniroma3.siw.ecommerce.Service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class HomeController {
@@ -29,6 +30,12 @@ public class HomeController {
 
     @Autowired
     ProductService productService;
+    @Autowired
+    ProductRepository productRepository;
+    @Autowired
+    GlobalController globalController;
+    @Autowired
+    ReviewService reviewService;
 
     @GetMapping({"/", "/home"})
     public  String home(Model model){
@@ -83,9 +90,22 @@ public class HomeController {
         model.addAttribute("wishlistCount", WishList.wishlist.size());
         model.addAttribute("cartCount", GlobalData.cart.size());
         model.addAttribute("categories",categoryService.getAllCategories());
+        model.addAttribute("user", globalController.getUser());
         model.addAttribute("newsletter", new Newsletter());
+        model.addAttribute("review", new Review());
+        model.addAttribute("reviews", productRepository.findProductById(id).getReviews());
+        model.addAttribute("reviewsCount", reviewService.countReviews());
+        Product product = productService.findProductById(id);
+        model.addAttribute("hasReviews", !product.getReviews().isEmpty());
+        if(this.globalController.getUser()!=null && this.globalController.getUser().getUsername()!=null && this.productService.alreadyReviewed(product.getReviews(),this.globalController.getUser().getUsername()))
+            model.addAttribute("hasNotAlreadyCommented",false);
+        else
+            model.addAttribute("hasNotAlreadyCommented",true);
+
         return "viewProduct";
     }
+
+
 
     @GetMapping("/contact")
     public String getContact(Model model){

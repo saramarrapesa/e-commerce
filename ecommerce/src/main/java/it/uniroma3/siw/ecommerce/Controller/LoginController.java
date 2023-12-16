@@ -1,8 +1,11 @@
 package it.uniroma3.siw.ecommerce.Controller;
 
 import it.uniroma3.siw.ecommerce.Global.GlobalData;
+import it.uniroma3.siw.ecommerce.Global.WishList;
 import it.uniroma3.siw.ecommerce.Model.Credentials;
+import it.uniroma3.siw.ecommerce.Model.Newsletter;
 import it.uniroma3.siw.ecommerce.Model.User;
+import it.uniroma3.siw.ecommerce.Repository.NewsletterRepository;
 import it.uniroma3.siw.ecommerce.Service.CategoryService;
 import it.uniroma3.siw.ecommerce.Service.CredentialsService;
 import it.uniroma3.siw.ecommerce.Service.UserService;
@@ -35,9 +38,11 @@ public class LoginController {
     @Autowired
     SessionData sessionData;
 
+
     @GetMapping("/login")
     public  String login(Model model){
         GlobalData.cart.clear();
+        WishList.wishlist.clear();
         return "login";
     }
 
@@ -77,6 +82,7 @@ public class LoginController {
             return "admin/adminHome";
         }
         model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("newsletter", new Newsletter());
         return "index";
     }
 

@@ -57,7 +57,7 @@ public class SecurityConfig{
         httpSecurity
                 .csrf().and().cors().disable()
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.GET,"/","/index","/shop/**","/register","/login","/register","/css/**","/lib/**", "/scss/**","/js/**","/mail/**","/images/**","/productImage/**", "favicon.icon","/cart","/checkout","/orderPlaced","/viewProduct","/productImages/{id}","/wishlist","/contact").permitAll()
+                .requestMatchers(HttpMethod.GET,"/","/index","/shop/**","/login","/register","/css/**","/lib/**", "/scss/**","/js/**","/mail/**","/images/**","/productImage/**", "favicon.icon","/cart","/checkout","/orderPlaced","/viewProduct","/productImages/{id}","/wishlist","/contact").permitAll()
                 .requestMatchers("/oauth2/**").authenticated()
                 .requestMatchers(HttpMethod.POST,"/register","/login","/contact","/newsletter").permitAll()
                 .requestMatchers(HttpMethod.GET,"/admin/**").hasAnyAuthority(ADMIN_ROLE)

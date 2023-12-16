@@ -12,15 +12,15 @@
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-
     <!-- Libraries Stylesheet -->
     <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-
     <!-- Customized Bootstrap Stylesheet -->
     <link href="/css/style.css" rel="stylesheet">
+   <!-- <link href="/css/rating/rating.css" rel="stylesheet">-->
 </head>
 
 <body>
+
 <!-- Topbar Start -->
 <div class="row align-items-center py-3 px-xl-5">
     <div class="col-lg-3 d-none d-lg-block">
@@ -29,18 +29,16 @@
         </a>
     </div>
     <div class="col-lg-6 col-6 text-left">
-        <div class="col-lg-6 col-6 text-left">
-            <form th:action="@{/shop}" method="get">
-                <div class="input-group">
-                    <input type="text" name="keyword" class="form-control" placeholder="Search for products">
-                    <div class="input-group-append">
+        <form th:action="@{/shop}" method="get">
+            <div class="input-group">
+                <input type="text" name="keyword" class="form-control" placeholder="Search for products">
+                <div class="input-group-append">
                             <span class="input-group-text bg-transparent text-primary">
                                 <i class="fa fa-search"></i>
                             </span>
-                    </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
     <!--devo aggiungere la funzione-->
     <div class="col-lg-3 col-6 text-right">
@@ -55,6 +53,7 @@
     </div>
 </div>
 <!-- Topbar End -->
+
 
 <!-- Navbar Start -->
 <div class="container-fluid">
@@ -136,7 +135,7 @@
         <div class="col">
             <div class="nav nav-tabs justify-content-center border-secondary mb-4">
                 <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Description</a>
-                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Reviews (0)</a>
+                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3" th:text="'Reviews ' + '(' + ${reviewsCount} + ')'">Reviews (0)</a>
             </div>
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="tab-pane-1">
@@ -144,49 +143,61 @@
                     <p th:text="${product.description}" >Eos no lorem eirmod diam diam, eos elitr et gubergren diam sea. Consetetur vero aliquyam invidunt duo dolores et duo sit. Vero diam ea vero et dolore rebum, dolor rebum eirmod consetetur invidunt sed sed et, lorem duo et eos elitr, sadipscing kasd ipsum rebum diam. Dolore diam stet rebum sed tempor kasd eirmod. Takimata kasd ipsum accusam sadipscing, eos dolores sit no ut diam consetetur duo justo est, sit sanctus diam tempor aliquyam eirmod nonumy rebum dolor accusam, ipsum kasd eos consetetur at sit rebum, diam kasd invidunt tempor lorem, ipsum lorem elitr sanctus eirmod takimata dolor ea invidunt.</p>
                 </div>
                 <div class="tab-pane fade" id="tab-pane-3">
+                    <!--Start Reviews part-->
                     <div class="row">
+                        <!--First Column with the reviews-->
                         <div class="col-md-6">
-                            <h4 class="mb-4">1 review for "Colorful Stylish Shirt"</h4>
-                            <div class="media mb-4">
-                                <img src="/images/img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
-                                <div class="media-body">
-                                    <h6>John Doe<small> - <i>01 Jan 2045</i></small></h6>
-                                    <div class="text-primary mb-2">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                        <i class="far fa-star"></i>
+                            <div th:if="${hasReviews}">
+                                    <div  class="media mb-4">
+                                        <div style="display: flex;">
+                                            <h5 th:text="${reviewsCount} + ' reviews for ' + ${product.name}">1 </h5> <!--Mantiene il conto delle recensioni che ci sono-->
+                                        </div>
+                                        <ul th:each="rev : ${reviews}">
+                                        <div  class="media-body">
+                                            <h5 th:text="${rev.username} ">John Doe<small> - <i th:text="${rev.date}">01 Jan 2045</i></small></h5>
+                                            <h6 th:text="${rev.title}"></h6>
+                                            <div class="text-primary mb-2">
+                                                <span class="rating__result"></span>
+                                                <i class="fas fa-star" th:each="star: ${#numbers.sequence(1, rev.rating)}"></i>
+                                                <i class="fas fa-star start-empty" th:each="star: ${#numbers.sequence(1, 5 - rev.rating)}"></i>
+                                            </div>
+                                            <p th:text="${rev.description}">Testo della recensione.</p>
+                                            <div th:if="${rev.username.equals(user.getUsername())}"  sec:authorize="hasAuthority('DEFAULT')">
+                                                <br><button class="btn btn-primary bg-light" >
+                                                <a  th:href="'user/deleteReview/' + ${id} + '/' + ${rev.id}" >Delete</a></button></div>
+                                        </div>
+                                        </ul>
                                     </div>
-                                    <p>Diam amet duo labore stet elitr ea clita ipsum, tempor labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.</p>
-                                </div>
+                            </div>
+
+                            <div class="media mb-4" th:unless="${hasReviews}">
+                                <h5>Reviews part is empty . Leave your first Review</h5>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <h4 class="mb-4">Leave a review</h4>
+                        <!--Second Column with the review's form-->
+                        <div class="col-md-6"th:if="${hasNotAlreadyCommented}" sec:authorize="hasAuthority('DEFAULT')" >
+                            <h4 class="mb-4" >Leave a review</h4>
                             <small>Your email address will not be published. Required fields are marked *</small>
-                            <div class="d-flex my-3">
-                                <p class="mb-0 mr-2">Your Rating * :</p>
-                                <div class="text-primary">
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
+                            <form th:action="@{'/user/addReview/' + ${product.id}}" th:object="${review}" class="form" method="post">
+                                <div class="d-flex my-3">
+                                    <p class="mb-0 mr-2">Your Rating * :</p>
+                                    <div class="text-primary" th:field="${review.rating}">
+                                            <div class="stars" >
+                                                <i class="far fa-star" style="color: gold"></i>
+                                                <i class="far fa-star" style="color: gold"></i>
+                                                <i class="far fa-star" style="color: gold"></i>
+                                                <i class="far fa-star" style="color: gold"></i>
+                                                <i class="far fa-star" style="color: gold"></i>
+                                            </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <form>
                                 <div class="form-group">
                                     <label for="message">Your Review *</label>
-                                    <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
+                                    <textarea th:field="${review.description}" id="message" cols="30" rows="5" class="form-control"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="name">Your Name *</label>
-                                    <input type="text" class="form-control" id="name">
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">Your Email *</label>
-                                    <input type="email" class="form-control" id="email">
+                                    <label for="title">Your Title *</label>
+                                    <input th:field="${review.title}" type="text" class="form-control" id="title">
                                 </div>
                                 <div class="form-group mb-0">
                                     <input type="submit" value="Leave Your Review" class="btn btn-primary px-3">
@@ -194,6 +205,7 @@
                             </form>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -230,11 +242,11 @@
                     <h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
                     <form th:action="@{/newsletter}" th:object="${newsletter}" method="post" >
                         <div class="form-group">
-                            <input type="text" class="form-control border-0 py-4 " name="name" id="name" placeholder="Your Name" required th:field="${newsletter.name}"/>
+                            <input type="text" class="form-control border-0 py-4 " name="newsName" id="newsName" placeholder="Your Name" required th:field="${newsletter.newsName}"/>
                         </div>
                         <div class="form-group">
-                            <input type="email" name="email" id="email" class="form-control border-0 py-4 " placeholder="Your Email"
-                                   required th:field="${newsletter.email}"/>
+                            <input type="email" name="newsEmail" id="newsEmail" class="form-control border-0 py-4 " placeholder="Your Email"
+                                   required th:field="${newsletter.newsEmail}"/>
                         </div>
                         <div>
                             <input class="btn btn-primary btn-block border-0 py-3" type="submit" value="Subscribe Now " />
@@ -259,7 +271,31 @@
 <!-- Back to Top -->
 <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
+<script>
+    // Select all elements with the "i" tag and store them in a NodeList called "stars"
+    const stars = document.querySelectorAll(".stars i");
 
+    // Loop through the "stars" NodeList
+    stars.forEach((star, index1) => {
+        // Add an event listener that runs a function when the "click" event is triggered
+        star.addEventListener("click", () => {
+            // Loop through the "stars" NodeList Again
+            stars.forEach((star, index2) => {
+                // Add the "active" class to the clicked star and any stars with a lower index
+                // and remove the "active" class from any stars with a higher index
+                if (index1 >= index2) {
+                    star.classList.add("active");
+                    star.className="fa fa-star checked";
+                    star.style.color= 'gold';
+                } else {
+                    star.classList.remove("active");
+                    star.className="far fa-star ";
+                }
+            });
+        });
+    });
+
+</script>
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

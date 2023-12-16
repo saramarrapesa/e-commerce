@@ -11,24 +11,24 @@ public class Newsletter {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    public String getName() {
-        return name;
+    public String getNewsName() {
+        return newsName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNewsName(String newsName) {
+        this.newsName = newsName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getNewsEmail() {
+        return newsEmail;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setNewsEmail(String newsEmail) {
+        this.newsEmail = newsEmail;
     }
 
-    private String name;
-    private String email;
+    private String newsName;
+    private String newsEmail;
 
     public void setId(Long id) {
         this.id = id;
