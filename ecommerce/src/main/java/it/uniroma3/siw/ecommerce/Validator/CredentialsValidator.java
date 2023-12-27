@@ -31,13 +31,13 @@ public class CredentialsValidator implements Validator {
         String password= credentials.getPassword().trim();
 
         if(userName.isEmpty()){
-            errors.rejectValue("userName","required");
+            errors.rejectValue("username","required");
         }
         else if(userName.length() < MIN_USERNAME_LENGTH || userName.length() > MAX_USERNAME_LENGTH){
-            errors.rejectValue("userName","size");
+            errors.rejectValue("username","size");
         }
         else if(this.credentialsService.getCredentials(userName) != null){
-            errors.rejectValue("userName", "duplicate");
+            errors.rejectValue("username", "duplicate");
         }
 
         if(password.isEmpty()){

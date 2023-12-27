@@ -112,19 +112,6 @@
             <p class="font-weight-semi-bold" th:text="${product.brand}" ></p>
             <p class="mb-4" th:text="${product.category.name}" >.</p>
             <div class="d-flex align-items-center mb-4 pt-2">
-                <div class="input-group quantity mr-3" style="width: 130px;">
-                    <div class="input-group-btn">
-                        <button class="btn btn-primary btn-minus" >
-                            <i class="fa fa-minus"></i>
-                        </button>
-                    </div>
-                    <input type="text" class="form-control bg-secondary text-center" value="1">
-                    <div class="input-group-btn">
-                        <button class="btn btn-primary btn-plus">
-                            <i class="fa fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
                 <a th:href="@{/addToCart/{id}(id = ${product.id})}" class="btn btn-primary"><i class="fa fa-shopping-cart mr-1" ></i> Add to cart</a>
             </div>
             <span><a th:href="@{/addToWishlist/{id}(id = ${product.id})}" class="btn btn-sm text-dark p-0" ><i class="fas fa-heart text-primary mr-1"></i>Like</a></span>
@@ -148,12 +135,13 @@
                         <!--First Column with the reviews-->
                         <div class="col-md-6">
                             <div th:if="${hasReviews}">
-                                    <div  class="media mb-4">
+
                                         <div style="display: flex;">
                                             <h5 th:text="${reviewsCount} + ' reviews for ' + ${product.name}">1 </h5> <!--Mantiene il conto delle recensioni che ci sono-->
                                         </div>
+                                <div  class="media mb-4">
                                         <ul th:each="rev : ${reviews}">
-                                        <div  class="media-body">
+                                        <div  class="media-body ">
                                             <h5 th:text="${rev.username} ">John Doe<small> - <i th:text="${rev.date}">01 Jan 2045</i></small></h5>
                                             <h6 th:text="${rev.title}"></h6>
                                             <div class="text-primary mb-2">
@@ -164,9 +152,10 @@
                                             <p th:text="${rev.description}">Testo della recensione.</p>
                                             <div th:if="${rev.username.equals(user.getUsername())}"  sec:authorize="hasAuthority('DEFAULT')">
                                                 <br><button class="btn btn-primary bg-light" >
-                                                <a  th:href="'user/deleteReview/' + ${id} + '/' + ${rev.id}" >Delete</a></button></div>
+                                                <a  th:href="'user/deleteReview/' + ${product.id} + '/' + ${rev.id}" >Delete</a></button></div>
                                         </div>
                                         </ul>
+
                                     </div>
                             </div>
 
@@ -178,38 +167,32 @@
                         <div class="col-md-6"th:if="${hasNotAlreadyCommented}" sec:authorize="hasAuthority('DEFAULT')" >
                             <h4 class="mb-4" >Leave a review</h4>
                             <small>Your email address will not be published. Required fields are marked *</small>
-                            <form th:action="@{'/user/addReview/' + ${product.id}}" th:object="${review}" class="form" method="post">
+                            <form th:action="@{'/user/uploadReview/' + ${product.id}}" th:object="${review}" class="form" method="post">
                                 <div class="d-flex my-3">
                                     <p class="mb-0 mr-2">Your Rating * :</p>
-                                    <div class="text-primary" th:field="${review.rating}">
-                                            <div class="stars" >
-                                                <i class="far fa-star" style="color: gold"></i>
-                                                <i class="far fa-star" style="color: gold"></i>
-                                                <i class="far fa-star" style="color: gold"></i>
-                                                <i class="far fa-star" style="color: gold"></i>
-                                                <i class="far fa-star" style="color: gold"></i>
-                                            </div>
+                                    <div class="text-primary">
+                                        <input required type="number" min="1" max="5" name="rating" th:field="${review.rating}" id="animated-input">
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="message">Your Review *</label>
-                                    <textarea th:field="${review.description}" id="message" cols="30" rows="5" class="form-control"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="title">Your Title *</label>
-                                    <input th:field="${review.title}" type="text" class="form-control" id="title">
-                                </div>
-                                <div class="form-group mb-0">
-                                    <input type="submit" value="Leave Your Review" class="btn btn-primary px-3">
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                               </div>
+                               <div class="form-group">
+                                   <label for="message">Your Review *</label>
+                                   <textarea th:field="${review.description}" id="message" cols="30" rows="5" class="form-control"></textarea>
+                               </div>
+                               <div class="form-group">
+                                   <label for="title">Your Title *</label>
+                                   <input th:field="${review.title}" type="text" class="form-control" id="title">
+                               </div>
+                               <div class="form-group mb-0">
+                                   <input type="submit" value="Leave Your Review" class="btn btn-primary px-3">
+                               </div>
+                           </form>
+                       </div>
+                   </div>
 
-                </div>
-            </div>
-        </div>
-    </div>
+               </div>
+           </div>
+       </div>
+   </div>
 </div>
 <!-- Shop Detail End -->
 

@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -61,14 +60,14 @@ public class ProductService {
 
     //ogni utente può scrivere una recensione sul prodotto
 
-    public void function (Model model , Product prodotto , String username) {
-        if(username!=null && this.alreadyReviewed(prodotto.getReviews(), username))
+    public void function (Model model , Product product, String username) {
+        if(username!=null && this.alreadyReviewed(product.getReviews(), username))
             model.addAttribute("hasNotAlreadyCommented", false);
         else
             model.addAttribute("hasNotAlreadyCommented", true);
         model.addAttribute("review", new Review());
-        model.addAttribute("reviews", prodotto.getReviews());
-        model.addAttribute("hasReviews", !prodotto.getReviews().isEmpty());
+        model.addAttribute("reviews", product.getReviews());
+        model.addAttribute("hasReviews", !product.getReviews().isEmpty());
 
     }
 
@@ -82,4 +81,7 @@ public class ProductService {
         }
         return false;
     }
+
+
 }
+

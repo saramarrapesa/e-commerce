@@ -45,6 +45,7 @@ public class ReviewController {
                 product.getReviews().add(review);
             }
             this.productService.saveProdotto(product);
+            model.addAttribute("product", productRepository.findProductById(id));
             this.productService.function(model, product, this.globalController.getUser().getUsername());
             System.out.println("recensione aggiunta");
             return "redirect:/shop/viewproduct/{id}";
@@ -62,7 +63,7 @@ public class ReviewController {
         this.reviewService.deleteReview(review);
         this.productService.saveProdotto(prodotto);
         this.productService.function(model, prodotto, this.globalController.getUser().getUsername());
-        return "redirect:/product/{id}";
+        return "redirect:/shop/viewproduct/{id}";
     }
 
 
