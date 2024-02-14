@@ -28,7 +28,7 @@ public class CartController {
     public String cartGet(Model model){
         model.addAttribute("wishlistCount", WishList.wishlist.size());
         model.addAttribute("cartCount", GlobalData.cart.size());
-        model.addAttribute("total", GlobalData.cart.stream().mapToDouble(Product::getPrice));
+        model.addAttribute("total", productService.getTotal());
         model.addAttribute("cart", GlobalData.cart);
         model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("newsletter", new Newsletter());

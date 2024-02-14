@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
->
 <head>
   <meta charset="utf-8">
   <title>EShopper - Bootstrap Shop Template</title>
@@ -112,7 +111,7 @@
     <div class="col-lg-7 mb-5">
       <div class="contact-form">
         <div id="success"></div>
-        <form th:action="@{/contact}" th:object="${contact}" method="post"   > <!--id="contactForm"-->
+        <form th:action="@{/contact}" th:object="${contact}" method="post"  >
           <div class="control-group">
             <input type="text" class="form-control" name="name" id="name" placeholder="Your Name" required th:field="${contact.name}"  />
             <p class="help-block text-danger"></p>
@@ -135,7 +134,7 @@
           </div>
         </form>
       </div>
-       </div>
+    </div>
        <div class="col-lg-5 mb-5">
          <div class="d-flex flex-column mb-3">
            <h5 class="font-weight-semi-bold mb-3">Store 1</h5>

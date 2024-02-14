@@ -38,25 +38,31 @@ public class HomeController {
     ReviewService reviewService;
 
     @GetMapping({"/", "/home"})
-    public  String home(Model model){
+    public  String home(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication instanceof AnonymousAuthenticationToken) {
             model.addAttribute("wishlistCount", WishList.wishlist.size());
-            model.addAttribute("cartCount",GlobalData.cart.size());
+            model.addAttribute("cartCount", GlobalData.cart.size());
             model.addAttribute("categories", categoryService.getAllCategories());
             model.addAttribute("newsletter", new Newsletter());
             GlobalData.cart.clear();
             WishList.wishlist.clear();
             return "index";
-        }
-        else {
-            UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        } else {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
             if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
                 return "admin/adminHome";
             }
+            if (credentials.getRole().equals(Credentials.DEFAULT_ROLE)) {
+                model.addAttribute("wishlistCount", WishList.wishlist.size());
+                model.addAttribute("cartCount", GlobalData.cart.size());
+                model.addAttribute("categories", categoryService.getAllCategories());
+                model.addAttribute("newsletter", new Newsletter());
+                return "index";
+            }
         }
-        return "index";
+            return "index";
     }
 
    @GetMapping("/shop")

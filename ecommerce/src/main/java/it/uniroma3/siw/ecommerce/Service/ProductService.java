@@ -1,5 +1,6 @@
 package it.uniroma3.siw.ecommerce.Service;
 
+import it.uniroma3.siw.ecommerce.Global.GlobalData;
 import it.uniroma3.siw.ecommerce.Model.Image;
 import it.uniroma3.siw.ecommerce.Model.Product;
 import it.uniroma3.siw.ecommerce.Model.Review;
@@ -80,6 +81,12 @@ public class ProductService {
             }
         }
         return false;
+    }
+
+    public double getTotal (){
+        double total = 0;
+        total = GlobalData.cart.stream().mapToDouble(Product::getPrice).sum();
+        return total;
     }
 
 
