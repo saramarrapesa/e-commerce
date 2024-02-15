@@ -1,5 +1,6 @@
 package it.uniroma3.siw.ecommerce.Model;
 
+import it.uniroma3.siw.ecommerce.Global.GlobalData;
 import it.uniroma3.siw.ecommerce.OAuth.AuthenticationProvider;
 import jakarta.persistence.*;
 import org.hibernate.validator.constraints.NotBlank;

@@ -25,10 +25,12 @@ public class ProductService {
 
     @Autowired
     private ImageRepository imageRepository;
+
     public List<Product> getAllProducts(){
         return productRepository.findAll();
     }
 
+    @Transactional
     public Product addProduct(Product product , MultipartFile multipartFile )throws IOException {
         Image imageProduct = new Image(multipartFile.getBytes());
         this.imageRepository.save(imageProduct);
@@ -36,10 +38,9 @@ public class ProductService {
         return this.productRepository.save(product);
     }
 
-    public void saveProdotto(Product product) {
+    public void saveProduct(Product product) {
         this.productRepository.save(product);
     }
-
 
     public void removeProduct(Long id){
         productRepository.deleteById(id);
